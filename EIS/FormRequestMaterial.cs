@@ -49,7 +49,6 @@ namespace EIS
             {
                 toolStripComboBoxBuyer.SelectedIndex = -1;
             }
-            
         }
         public void selectTable(string ConnectionString, String selectCommand)
         {
@@ -145,8 +144,8 @@ namespace EIS
                     _idRequest = Convert.ToInt32(idReqValue) + 1;
                 }
             }
-            string txtSQLQuery = "insert into RequestMaterial (Id, IdRequest, IdMaterial, Count) values (" +
-          (Convert.ToInt32(maxValue) + 1) + ", '" + _idRequest + "', '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + toolStripTextBoxCount.Text + "')";
+            string txtSQLQuery = "insert into RequestMaterial (Id, IdRequest, IdMaterial, Count) values ('" +
+          (Convert.ToInt32(maxValue) + 1) + "', '" + _idRequest + "', '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + toolStripTextBoxCount.Text + "')";
             ExecuteQuery(txtSQLQuery);
             selectCommand = "Select RequestMaterial.Id, RequestMaterial.IdRequest, Material.Name, RequestMaterial.Count " +
                 "FROM RequestMaterial Join Material On Material.IdMaterial=RequestMaterial.IdMaterial WHERE RequestMaterial.IdRequest ='" + _idRequest + "'";
@@ -206,7 +205,7 @@ namespace EIS
                 { //add
                     string txtSQLQuery = "insert into Request (IdRequest, IdBuyer, Count, RequestDate) values (" +
                         _idRequest + ", '" + toolStripComboBoxBuyer.ComboBox.SelectedValue + "', '" +
-                        countReq + "', '" + DateTime.Now.ToString() + "')";
+                        countReq + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "')";
                     ExecuteQuery(txtSQLQuery);
                 }
                 else

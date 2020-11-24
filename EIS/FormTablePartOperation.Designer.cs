@@ -50,8 +50,6 @@
             this.toolStripTextBoxSumBuy = new System.Windows.Forms.ToolStripTextBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -60,29 +58,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(-471, 31);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(-353, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 17);
+            this.label1.Size = new System.Drawing.Size(33, 13);
             this.label1.TabIndex = 15;
             this.label1.Text = "Дата";
             // 
             // textBoxRequested
             // 
             this.textBoxRequested.Enabled = false;
-            this.textBoxRequested.Location = new System.Drawing.Point(664, 31);
-            this.textBoxRequested.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRequested.Location = new System.Drawing.Point(498, 25);
             this.textBoxRequested.Name = "textBoxRequested";
-            this.textBoxRequested.Size = new System.Drawing.Size(132, 22);
+            this.textBoxRequested.Size = new System.Drawing.Size(100, 20);
             this.textBoxRequested.TabIndex = 17;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(525, 34);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(394, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 17);
+            this.label2.Size = new System.Drawing.Size(104, 13);
             this.label2.TabIndex = 16;
             this.label2.Text = "Заказано в заявке";
             // 
@@ -115,26 +110,26 @@
             this.bindingNavigator1.MovePreviousItem = null;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = null;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1282, 28);
+            this.bindingNavigator1.Size = new System.Drawing.Size(962, 27);
             this.bindingNavigator1.TabIndex = 14;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
             // toolStripLabel5
             // 
             this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(78, 25);
+            this.toolStripLabel5.Size = new System.Drawing.Size(62, 24);
             this.toolStripLabel5.Text = "Материал";
             // 
             // toolStripComboBoxMaterial
             // 
             this.toolStripComboBoxMaterial.Name = "toolStripComboBoxMaterial";
-            this.toolStripComboBoxMaterial.Size = new System.Drawing.Size(121, 28);
+            this.toolStripComboBoxMaterial.Size = new System.Drawing.Size(92, 27);
             this.toolStripComboBoxMaterial.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxMaterial_SelectedIndexChanged);
             // 
             // toolStripLabel6
             // 
             this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(63, 25);
+            this.toolStripLabel6.Size = new System.Drawing.Size(51, 24);
             this.toolStripLabel6.Text = "Остаток";
             // 
             // toolStripTextBoxRemains
@@ -142,12 +137,12 @@
             this.toolStripTextBoxRemains.Enabled = false;
             this.toolStripTextBoxRemains.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxRemains.Name = "toolStripTextBoxRemains";
-            this.toolStripTextBoxRemains.Size = new System.Drawing.Size(100, 28);
+            this.toolStripTextBoxRemains.Size = new System.Drawing.Size(76, 27);
             // 
             // toolStripLabel7
             // 
             this.toolStripLabel7.Name = "toolStripLabel7";
-            this.toolStripLabel7.Size = new System.Drawing.Size(45, 25);
+            this.toolStripLabel7.Size = new System.Drawing.Size(35, 24);
             this.toolStripLabel7.Text = "Цена";
             // 
             // toolStripTextBoxMPrice
@@ -155,12 +150,12 @@
             this.toolStripTextBoxMPrice.Enabled = false;
             this.toolStripTextBoxMPrice.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxMPrice.Name = "toolStripTextBoxMPrice";
-            this.toolStripTextBoxMPrice.Size = new System.Drawing.Size(100, 28);
+            this.toolStripTextBoxMPrice.Size = new System.Drawing.Size(76, 27);
             // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 28);
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonAdd
             // 
@@ -168,7 +163,7 @@
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.RightToLeftAutoMirrorImage = true;
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(29, 25);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonAdd.Text = "Добавить";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
@@ -178,7 +173,7 @@
             this.toolStripButtonChange.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonChange.Image")));
             this.toolStripButtonChange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonChange.Name = "toolStripButtonChange";
-            this.toolStripButtonChange.Size = new System.Drawing.Size(29, 25);
+            this.toolStripButtonChange.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonChange.Text = "Редактировать";
             this.toolStripButtonChange.Click += new System.EventHandler(this.toolStripButtonChange_Click);
             // 
@@ -188,27 +183,27 @@
             this.toolStripButtonDel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDel.Image")));
             this.toolStripButtonDel.Name = "toolStripButtonDel";
             this.toolStripButtonDel.RightToLeftAutoMirrorImage = true;
-            this.toolStripButtonDel.Size = new System.Drawing.Size(29, 25);
+            this.toolStripButtonDel.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonDel.Text = "Удалить";
             this.toolStripButtonDel.Click += new System.EventHandler(this.toolStripButtonDel_Click);
             // 
             // toolStripLabel3
             // 
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(146, 25);
+            this.toolStripLabel3.Size = new System.Drawing.Size(115, 24);
             this.toolStripLabel3.Text = "Кол-во материалов";
             // 
             // toolStripTextBoxCountMaterial
             // 
             this.toolStripTextBoxCountMaterial.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxCountMaterial.Name = "toolStripTextBoxCountMaterial";
-            this.toolStripTextBoxCountMaterial.Size = new System.Drawing.Size(100, 28);
-            this.toolStripTextBoxCountMaterial.Click += new System.EventHandler(this.toolStripTextBoxCountMaterial_Click);
+            this.toolStripTextBoxCountMaterial.Size = new System.Drawing.Size(76, 27);
+            this.toolStripTextBoxCountMaterial.TextChanged += new System.EventHandler(this.toolStripTextBoxCountMaterial_TextChanged);
             // 
             // toolStripLabel8
             // 
             this.toolStripLabel8.Name = "toolStripLabel8";
-            this.toolStripLabel8.Size = new System.Drawing.Size(55, 25);
+            this.toolStripLabel8.Size = new System.Drawing.Size(45, 24);
             this.toolStripLabel8.Text = "Сумма";
             // 
             // toolStripTextBoxSumBuy
@@ -216,14 +211,14 @@
             this.toolStripTextBoxSumBuy.Enabled = false;
             this.toolStripTextBoxSumBuy.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxSumBuy.Name = "toolStripTextBoxSumBuy";
-            this.toolStripTextBoxSumBuy.Size = new System.Drawing.Size(100, 28);
+            this.toolStripTextBoxSumBuy.Size = new System.Drawing.Size(76, 27);
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(-421, 31);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dateTimePicker1.Location = new System.Drawing.Point(-316, 25);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(148, 22);
+            this.dateTimePicker1.Size = new System.Drawing.Size(112, 20);
             this.dateTimePicker1.TabIndex = 13;
             // 
             // dataGridView1
@@ -232,49 +227,31 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(-482, 57);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView1.Location = new System.Drawing.Point(11, 35);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1764, 396);
+            this.dataGridView1.Size = new System.Drawing.Size(940, 322);
             this.dataGridView1.TabIndex = 12;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 34);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 17);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Дата";
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(63, 34);
-            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(148, 22);
-            this.dateTimePicker2.TabIndex = 18;
-            // 
             // FormTablePartOperation
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1282, 453);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.dateTimePicker2);
+            this.ClientSize = new System.Drawing.Size(962, 368);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxRequested);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.dataGridView1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormTablePartOperation";
             this.Text = "Табличная часть операций";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormTablePartOperation_FormClosed);
             this.Load += new System.EventHandler(this.FormDocPartRequest_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
@@ -306,8 +283,6 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSumBuy;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
     }
 }

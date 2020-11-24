@@ -25,16 +25,14 @@ namespace EIS
             InitializeComponent();
         }
 
-
         private void FormJournalOperation_Load(object sender, EventArgs e)
         {
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
             String selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
-                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, JO.IdMaterial, B.FIO, M.Name, M.Remains" +
+                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, B.FIO" +
                 " From JournalOfOperations JO" +
                 " Join Request R On R.IdRequest = JO.IdRequest" +
-                " Join Buyer B On R.IdBuyer = B.IdBuyer" +
-                " Join Material M On JO.IdMaterial = M.IdMaterial";
+                " Join Buyer B On R.IdBuyer = B.IdBuyer";
             selectTable(ConnectionString, selectCommand);
             toolStripTextBoxName.Text = "Покупка по заявке";
             String selectRequest = "Select IdRequest from Request";
@@ -74,6 +72,7 @@ connect);
             connect.Close();
             return value;
         }
+
         private void ExecuteQuery(string txtQuery)
         {
             sql_con = new SQLiteConnection("Data Source=" + sPath +
@@ -84,16 +83,16 @@ connect);
             sql_cmd.ExecuteNonQuery();
             sql_con.Close();
         }
+
         public void refreshForm(string ConnectionString, String selectCommand)
         {
             selectTable(ConnectionString, selectCommand);
             dataGridView1.Update();
             dataGridView1.Refresh();
             toolStripTextBoxName.Text = "Покупка по заявке";
-            //toolStripTextBoxCount.Text = "";
-            //toolStripTextBoxSumBuy.Text = "";
             toolStripComboBoxRequest.SelectedIndex = -1;
         }
+
         public void selectTable(string ConnectionString, String selectCommand)
         {
             SQLiteConnection connect = new
@@ -108,6 +107,7 @@ connect);
             dataGridView1.Columns[8].Visible = false;
             connect.Close();
         }
+
         public void changeValue(string ConnectionString, String selectCommand)
         {
             SQLiteConnection connect = new
@@ -126,40 +126,11 @@ connect);
         private void toolStripButtonBuy_Click(object sender, EventArgs e)
         {
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
-            String selectCommand = "select MAX(IdJournalOfOperations) from JournalOfOperations";
-            object maxValue = selectValue(ConnectionString, selectCommand);
-            if (Convert.ToString(maxValue) == "")
-            {
-                maxValue = 0;
-            }
-           
-            int RequestedCount = Convert.ToInt32(textBoxRequested.Text);
-            //int countBuy = Convert.ToInt32(toolStripTextBoxCount.Text);
-            //int RemainsCount = Convert.ToInt32(toolStripTextBoxRemains.Text);
-            //double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
-
-            //if (RequestedCount < RemainsCount)
-            //{
-            //    MessageBox.Show("Остатки материалов достаточны для удовлетворения заявки");
-            //    return;
-            //}
-
-            //double SumBuy = MPrice * countBuy;
-           // string selectNDS = "select NDS from Material where IdMaterial='" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
-            //double SumNDS = SumBuy * Convert.ToDouble(selectValue(ConnectionString, selectNDS)) / 100;
-
-            string txtSQLQuery = "insert into JournalOfOperations (IdJournalOfOperations, NameBuy, Date, CountBuy, SumBuy, " +
-                "SumNDS, IdRequest, IdMaterial) values (" + (Convert.ToInt32(maxValue) + 1) + ", '" + toolStripTextBoxName.Text + "', '" + 
-                dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', '" + toolStripComboBoxRequest.ComboBox.SelectedValue + "')";
-            ExecuteQuery(txtSQLQuery);
-
-            selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
-                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, JO.IdMaterial, B.FIO, M.Name, M.Remains" +
-                " From JournalOfOperations JO" +
-                " Join Request R On R.IdRequest = JO.IdRequest" +
-                " Join Buyer B On R.IdBuyer = B.IdBuyer" +
-                " Join Material M On JO.IdMaterial = M.IdMaterial";
-            refreshForm(ConnectionString, selectCommand);
+            var form = new FormTablePartOperation();
+            form.IdRequest = Convert.ToInt32(toolStripComboBoxRequest.ComboBox.SelectedValue);
+            form.NameBuy = toolStripTextBoxName.Text;
+            form.FormClosed += new FormClosedEventHandler(formTPOclosed);
+            form.Show();
         }
 
         private void toolStripButtonChange_Click(object sender, EventArgs e)
@@ -176,33 +147,11 @@ connect);
             String selectDate = "update JournalOfOperations set Date='" + changeDate + "'where IdJournalOfOperations = " + valueId;
             changeValue(ConnectionString, selectDate);
 
-            //string changeCountBuy = toolStripTextBoxCount.Text;
-            //String selectCountBuy = "update JournalOfOperations set CountBuy='" + changeCountBuy + "'where IdJournalOfOperations = " + valueId;
-            //changeValue(ConnectionString, selectCountBuy);
-
-            //string changeSumBuy = toolStripTextBoxSumBuy.Text;
-            //String selectSumBuy = "update JournalOfOperations set SumBuy='" + changeSumBuy + "'where IdJournalOfOperations = " + valueId;
-            //changeValue(ConnectionString, selectSumBuy);
-
-            //string selectNDS = "select NDS from Material where IdMaterial='" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
-            //string changeSumNDS = Convert.ToString(Convert.ToDouble(changeSumBuy) * Convert.ToDouble(selectValue(ConnectionString, selectNDS))/100);
-            //String selectSumNDS= "update JournalOfOperations set SumNDS='" + changeSumNDS + "'where IdJournalOfOperations = " + valueId;
-            //changeValue(ConnectionString, selectSumNDS);
-
-            string changeIdRequest = toolStripComboBoxRequest.ComboBox.SelectedValue.ToString();
-            String selectIdRequest = "update JournalOfOperations set IdRequest='" + changeIdRequest + "'where IdJournalOfOperations = " + valueId;
-            changeValue(ConnectionString, selectIdRequest);
-
-            //string changeIdMaterial = toolStripComboBoxMaterial.ComboBox.SelectedValue.ToString();
-            //String selectIdMaterial = "update JournalOfOperations set IdMaterial='" + changeIdMaterial + "'where IdJournalOfOperations = " + valueId;
-            //changeValue(ConnectionString, selectIdMaterial);
-
             string selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
-                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, JO.IdMaterial, B.FIO, M.Name, M.Remains" +
+                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, B.FIO, M.Name, M.Remains" +
                 " From JournalOfOperations JO" +
                 " Join Request R On R.IdRequest = JO.IdRequest" +
-                " Join Buyer B On R.IdBuyer = B.IdBuyer" +
-                " Join Material M On JO.IdMaterial = M.IdMaterial";
+                " Join Buyer B On R.IdBuyer = B.IdBuyer";
             refreshForm(ConnectionString, selectCommand);
         }
 
@@ -218,22 +167,11 @@ connect);
             changeValue(ConnectionString, selectCommand);
             //обновление dataGridView1
             selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
-                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, JO.IdMaterial, B.FIO, M.Name, M.Remains" +
+                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, B.FIO" +
                 " From JournalOfOperations JO" +
                 " Join Request R On R.IdRequest = JO.IdRequest" +
-                " Join Buyer B On R.IdBuyer = B.IdBuyer" +
-                " Join Material M On JO.IdMaterial = M.IdMaterial";
+                " Join Buyer B On R.IdBuyer = B.IdBuyer";
             refreshForm(ConnectionString, selectCommand);
-        }
-
-        private void toolStripComboBoxRequest_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
-            //String selectMaterial = "Select M.Name, M.IdMaterial from RequestMaterial RM " +
-            //    "Join Material M On RM.IdMaterial = M.IdMaterial " +
-            //    "Where RM.IdRequest = '" + toolStripComboBoxRequest.ComboBox.SelectedValue + "'";
-            //selectCombo(ConnectionString, selectMaterial, toolStripComboBoxMaterial, "Name", "IdMaterial");
-            //toolStripComboBoxMaterial.SelectedIndex = -1;
         }
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -251,9 +189,36 @@ connect);
 
         private void toolStripButtonOpen_Click(object sender, EventArgs e)
         {
-            var form = new FormTablePartOperation();
-           // form.FormClosed += new FormClosedEventHandler(formRMclosed);
-            form.Show();
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                string ConnectionString = @"Data Source=" + sPath +
+               ";New=False;Version=3";
+                var form = new FormTablePartOperation();
+                int CurrentRow = Convert.ToInt32(dataGridView1.SelectedCells[0].Value);
+                string selectCommand = "Select IdRequest From JournalOfOperations Where IdJournalOfOperations = '" + CurrentRow + "'";
+                try
+                {
+                    form.IdRequest = Convert.ToInt32(selectValue(ConnectionString, selectCommand));
+                } catch (Exception) { }
+
+                form.IdJO = CurrentRow;
+                form.NameBuy = toolStripTextBoxName.Text;
+                form.FormClosed += new FormClosedEventHandler(formTPOclosed);
+                form.Show();
+            }
+        }
+
+        private void formTPOclosed(object s, EventArgs e)
+        {
+            string ConnectionString = @"Data Source=" + sPath +
+           ";New=False;Version=3";
+
+            string selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
+                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, B.FIO" +
+                " From JournalOfOperations JO" +
+                " Join Request R On R.IdRequest = JO.IdRequest" +
+                " Join Buyer B On R.IdBuyer = B.IdBuyer";
+            refreshForm(ConnectionString, selectCommand);
         }
     }
 }
