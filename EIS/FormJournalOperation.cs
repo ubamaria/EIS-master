@@ -25,6 +25,7 @@ namespace EIS
             InitializeComponent();
         }
 
+
         private void FormJournalOperation_Load(object sender, EventArgs e)
         {
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
