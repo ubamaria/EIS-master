@@ -52,5 +52,11 @@ namespace EIS
             FormJournalOperation newForm = new FormJournalOperation();
             newForm.Show();
         }
+
+        private void журналПроводокToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var newForm = new FormJournalEntries();
+            newForm.Show();
+        }
     }
 }

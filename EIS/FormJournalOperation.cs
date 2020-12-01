@@ -165,6 +165,11 @@ connect);
             string ConnectionString = @"Data Source=" + sPath +
            ";New=False;Version=3";
             changeValue(ConnectionString, selectCommand);
+            selectCommand = "delete from TablePartOperation where IdRequest = '"
+                + Convert.ToInt32(toolStripComboBoxRequest.ComboBox.SelectedValue) + "'";
+            ConnectionString = @"Data Source=" + sPath +
+           ";New=False;Version=3";
+            changeValue(ConnectionString, selectCommand);
             //обновление dataGridView1
             selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
                 " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, B.FIO" +

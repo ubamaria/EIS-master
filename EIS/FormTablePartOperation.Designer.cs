@@ -36,6 +36,8 @@
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxMaterial = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboBoxProvider = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBoxRemains = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
@@ -44,12 +46,11 @@
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonChange = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBoxCountMaterial = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBoxSumBuy = new System.Windows.Forms.ToolStripTextBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.buttonJE = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -91,6 +92,8 @@
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel5,
             this.toolStripComboBoxMaterial,
+            this.toolStripLabel1,
+            this.toolStripComboBoxProvider,
             this.toolStripLabel6,
             this.toolStripTextBoxRemains,
             this.toolStripLabel7,
@@ -99,8 +102,6 @@
             this.toolStripButtonAdd,
             this.toolStripButtonChange,
             this.toolStripButtonDel,
-            this.toolStripLabel3,
-            this.toolStripTextBoxCountMaterial,
             this.toolStripLabel8,
             this.toolStripTextBoxSumBuy});
             this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
@@ -110,7 +111,7 @@
             this.bindingNavigator1.MovePreviousItem = null;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = null;
-            this.bindingNavigator1.Size = new System.Drawing.Size(962, 27);
+            this.bindingNavigator1.Size = new System.Drawing.Size(998, 27);
             this.bindingNavigator1.TabIndex = 14;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -125,6 +126,17 @@
             this.toolStripComboBoxMaterial.Name = "toolStripComboBoxMaterial";
             this.toolStripComboBoxMaterial.Size = new System.Drawing.Size(92, 27);
             this.toolStripComboBoxMaterial.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxMaterial_SelectedIndexChanged);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(70, 24);
+            this.toolStripLabel1.Text = "Поставщик";
+            // 
+            // toolStripComboBoxProvider
+            // 
+            this.toolStripComboBoxProvider.Name = "toolStripComboBoxProvider";
+            this.toolStripComboBoxProvider.Size = new System.Drawing.Size(92, 27);
             // 
             // toolStripLabel6
             // 
@@ -187,19 +199,6 @@
             this.toolStripButtonDel.Text = "Удалить";
             this.toolStripButtonDel.Click += new System.EventHandler(this.toolStripButtonDel_Click);
             // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(115, 24);
-            this.toolStripLabel3.Text = "Кол-во материалов";
-            // 
-            // toolStripTextBoxCountMaterial
-            // 
-            this.toolStripTextBoxCountMaterial.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripTextBoxCountMaterial.Name = "toolStripTextBoxCountMaterial";
-            this.toolStripTextBoxCountMaterial.Size = new System.Drawing.Size(76, 27);
-            this.toolStripTextBoxCountMaterial.TextChanged += new System.EventHandler(this.toolStripTextBoxCountMaterial_TextChanged);
-            // 
             // toolStripLabel8
             // 
             this.toolStripLabel8.Name = "toolStripLabel8";
@@ -233,15 +232,26 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(940, 322);
+            this.dataGridView1.Size = new System.Drawing.Size(976, 322);
             this.dataGridView1.TabIndex = 12;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
+            // 
+            // buttonJE
+            // 
+            this.buttonJE.Location = new System.Drawing.Point(616, 25);
+            this.buttonJE.Name = "buttonJE";
+            this.buttonJE.Size = new System.Drawing.Size(149, 23);
+            this.buttonJE.TabIndex = 18;
+            this.buttonJE.Text = "Посмотреть проводки";
+            this.buttonJE.UseVisualStyleBackColor = true;
+            this.buttonJE.Click += new System.EventHandler(this.buttonJE_Click);
             // 
             // FormTablePartOperation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 368);
+            this.ClientSize = new System.Drawing.Size(998, 368);
+            this.Controls.Add(this.buttonJE);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxRequested);
             this.Controls.Add(this.label2);
@@ -277,12 +287,13 @@
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButtonChange;
         private System.Windows.Forms.ToolStripButton toolStripButtonDel;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxCountMaterial;
         private System.Windows.Forms.ToolStripLabel toolStripLabel8;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSumBuy;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxProvider;
+        private System.Windows.Forms.Button buttonJE;
     }
 }

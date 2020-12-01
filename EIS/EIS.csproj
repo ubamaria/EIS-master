@@ -77,6 +77,12 @@
     <Compile Include="FormChartOfAccounts.Designer.cs">
       <DependentUpon>FormChartOfAccounts.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormJournalEntries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormJournalEntries.Designer.cs">
+      <DependentUpon>FormJournalEntries.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormTablePartOperation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormChartOfAccounts.resx">
       <DependentUpon>FormChartOfAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormJournalEntries.resx">
+      <DependentUpon>FormJournalEntries.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTablePartOperation.resx">
       <DependentUpon>FormTablePartOperation.cs</DependentUpon>
