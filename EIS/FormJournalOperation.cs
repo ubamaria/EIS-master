@@ -148,7 +148,7 @@ connect);
             changeValue(ConnectionString, selectDate);
 
             string selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
-                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, B.FIO, M.Name, M.Remains" +
+                " JO.CountBuy, JO.SumBuy, JO.SumNDS, R.RequestDate, JO.IdRequest, B.FIO" +
                 " From JournalOfOperations JO" +
                 " Join Request R On R.IdRequest = JO.IdRequest" +
                 " Join Buyer B On R.IdBuyer = B.IdBuyer";

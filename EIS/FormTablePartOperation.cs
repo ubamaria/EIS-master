@@ -192,7 +192,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             string selectNDS = "select nds from material where idmaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
             double nds = Convert.ToDouble(selectValue(ConnectionString, selectNDS));
 
-            string changeCountMaterial = toolStripTextBoxCountMaterial.Text;
+            string changeCountMaterial = Convert.ToString(toolStripTextBoxCountMaterial.Text);
             String selectCountMaterial = "update TablePartOperation set CountMaterial='" + changeCountMaterial + "'where Id = " + valueId;
             changeValue(ConnectionString, selectCountMaterial);
 
