@@ -154,9 +154,10 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
 
             double price = countMaterial * MPrice;
-
             string selectNDS = "select nds from material where idmaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
             double nds = Convert.ToDouble(selectValue(ConnectionString, selectNDS));
+            double SumNDS = (nds*price)/100;
+
 
             string material = toolStripComboBoxMaterial.ComboBox.Text;
             string provider = toolStripComboBoxProvider.ComboBox.Text;
@@ -168,7 +169,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             }
 
             string txtSQLQuery = "insert into TablePartOperation (Id, IdMaterial, IdRequest, IdProvider, CountMaterial, Price, NDS) values (" + MaxValue+ ", '" +
-                toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + idRequest + "', '" + toolStripComboBoxProvider.ComboBox.SelectedValue + "', '" + countMaterial + "', '" + price + "', '" + nds + "')";
+                toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + idRequest + "', '" + toolStripComboBoxProvider.ComboBox.SelectedValue + "', '" + countMaterial + "', '" + price + "', '" + SumNDS + "')";
             ExecuteQuery(txtSQLQuery);
 
             txtSQLQuery = "insert into JournalEntries (Date, Dt, " +
@@ -181,10 +182,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
         "SubcontoDt1, SubcontoDt2, Kt, SubcontoKt1, SubcontoKt2, Count, Sum, " +
         "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") +
         "', '19', '', '', '60', '" + provider + "', '" + idRequest +
-        "', '" + countMaterial + "', '" + nds + "', '" + idJO + "')";
-            ExecuteQuery(txtSQLQuery);
-
-            txtSQLQuery = "update Material set Remains = 0 where idMaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
+        "', '" + countMaterial + "', '" + SumNDS + "', '" + idJO + "')";
             ExecuteQuery(txtSQLQuery);
 
             selectCommand = "Select TP.Id, M.Name, TP.IdRequest," +
@@ -309,6 +307,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
                 int RemainsCount = Convert.ToInt32(toolStripTextBoxRemains.Text);
                 int countMaterial = RequestedCount - RemainsCount;
                 double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
+                double price = countMaterial * MPrice;
                 double SumBuy = MPrice * countMaterial;
                 toolStripTextBoxSumBuy.Text = SumBuy.ToString();
             }

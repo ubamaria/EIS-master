@@ -41,8 +41,6 @@
             this.toolStripButtonChange = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonOpen = new System.Windows.Forms.ToolStripButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxRequested = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -56,13 +54,13 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 48);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 59);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1317, 322);
+            this.dataGridView1.Size = new System.Drawing.Size(1756, 396);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             // 
@@ -90,44 +88,44 @@
             this.bindingNavigator1.MovePreviousItem = null;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = null;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1328, 27);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1771, 28);
             this.bindingNavigator1.TabIndex = 8;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(88, 24);
+            this.toolStripLabel1.Size = new System.Drawing.Size(113, 25);
             this.toolStripLabel1.Text = "Имя операции";
             // 
             // toolStripTextBoxName
             // 
             this.toolStripTextBoxName.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxName.Name = "toolStripTextBoxName";
-            this.toolStripTextBoxName.Size = new System.Drawing.Size(76, 27);
+            this.toolStripTextBoxName.Size = new System.Drawing.Size(100, 28);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(84, 24);
+            this.toolStripLabel2.Size = new System.Drawing.Size(108, 25);
             this.toolStripLabel2.Text = "Номер заявки";
             // 
             // toolStripComboBoxRequest
             // 
             this.toolStripComboBoxRequest.Name = "toolStripComboBoxRequest";
-            this.toolStripComboBoxRequest.Size = new System.Drawing.Size(92, 27);
+            this.toolStripComboBoxRequest.Size = new System.Drawing.Size(121, 28);
             // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 27);
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 28);
             // 
             // toolStripButtonBuy
             // 
             this.toolStripButtonBuy.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBuy.Image")));
             this.toolStripButtonBuy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonBuy.Name = "toolStripButtonBuy";
-            this.toolStripButtonBuy.Size = new System.Drawing.Size(78, 24);
+            this.toolStripButtonBuy.Size = new System.Drawing.Size(91, 25);
             this.toolStripButtonBuy.Text = "Покупка";
             this.toolStripButtonBuy.Click += new System.EventHandler(this.toolStripButtonBuy_Click);
             // 
@@ -137,7 +135,7 @@
             this.toolStripButtonChange.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonChange.Image")));
             this.toolStripButtonChange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonChange.Name = "toolStripButtonChange";
-            this.toolStripButtonChange.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonChange.Size = new System.Drawing.Size(29, 25);
             this.toolStripButtonChange.Text = "Редактировать";
             this.toolStripButtonChange.Click += new System.EventHandler(this.toolStripButtonChange_Click);
             // 
@@ -147,7 +145,7 @@
             this.toolStripButtonDel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDel.Image")));
             this.toolStripButtonDel.Name = "toolStripButtonDel";
             this.toolStripButtonDel.RightToLeftAutoMirrorImage = true;
-            this.toolStripButtonDel.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonDel.Size = new System.Drawing.Size(29, 25);
             this.toolStripButtonDel.Text = "Удалить";
             this.toolStripButtonDel.Click += new System.EventHandler(this.toolStripButtonDel_Click);
             // 
@@ -157,57 +155,39 @@
             this.toolStripButtonOpen.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonOpen.Image")));
             this.toolStripButtonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonOpen.Name = "toolStripButtonOpen";
-            this.toolStripButtonOpen.Size = new System.Drawing.Size(138, 24);
+            this.toolStripButtonOpen.Size = new System.Drawing.Size(174, 25);
             this.toolStripButtonOpen.Text = "Посмотреть операцию";
             this.toolStripButtonOpen.Click += new System.EventHandler(this.toolStripButtonOpen_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(433, 27);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Заказано в заявке";
-            // 
-            // textBoxRequested
-            // 
-            this.textBoxRequested.Enabled = false;
-            this.textBoxRequested.Location = new System.Drawing.Point(543, 27);
-            this.textBoxRequested.Name = "textBoxRequested";
-            this.textBoxRequested.Size = new System.Drawing.Size(100, 20);
-            this.textBoxRequested.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 27);
+            this.label3.Location = new System.Drawing.Point(13, 33);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.Size = new System.Drawing.Size(42, 17);
             this.label3.TabIndex = 21;
             this.label3.Text = "Дата";
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(47, 27);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2);
+            this.dateTimePicker1.Location = new System.Drawing.Point(63, 33);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(112, 20);
+            this.dateTimePicker1.Size = new System.Drawing.Size(148, 22);
             this.dateTimePicker1.TabIndex = 20;
             // 
             // FormJournalOperation
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.ClientSize = new System.Drawing.Size(1328, 370);
+            this.ClientSize = new System.Drawing.Size(1771, 455);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBoxRequested);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.dataGridView1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormJournalOperation";
             this.Text = "Журнал операций";
             this.Load += new System.EventHandler(this.FormJournalOperation_Load);
@@ -232,8 +212,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonChange;
         private System.Windows.Forms.ToolStripButton toolStripButtonDel;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxName;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxRequested;
         private System.Windows.Forms.ToolStripButton toolStripButtonOpen;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;

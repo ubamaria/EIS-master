@@ -14,7 +14,7 @@ namespace EIS
 {
     public partial class FormJournalEntries : Form
     {
-        private int? idJO = 0;
+        private int idJO = -1;
         public int IdJO { set { idJO = value; } }
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
@@ -57,7 +57,7 @@ namespace EIS
                 selectCommand += " Where Date >= '" + dateTimePickerFrom.Value.ToString("yyyy-MM-dd") + 
                     "' and Date <= '" + dateTimePickerTo.Value.ToString("yyyy-MM-dd") + "'";
             }
-            if (idJO != null)
+            if (idJO != -1)
             {
                 if (!selectCommand.Contains("Where"))
                 {
