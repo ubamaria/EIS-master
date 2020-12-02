@@ -86,9 +86,9 @@ namespace EIS
             if (Convert.ToString(maxValue) == "")
                 maxValue = 0;
             //вставка в таблицу
-            string txtSQLQuery = "insert into Material (IdMaterial, Name, CostMaterial, NDS, Remains) values (" +
+            string txtSQLQuery = "insert into Material (IdMaterial, Name, CostMaterial, NDS) values (" +
             (Convert.ToInt32(maxValue) + 1) + ", '" + toolStripTextBox1.Text + "', '" +
-            toolStripTextBox2.Text + "', '" + toolStripTextBox3.Text + "', '" + toolStripTextBoxRemains.Text + "')";
+            toolStripTextBox2.Text + "', '" + toolStripTextBox3.Text  + "')";
             ExecuteQuery(txtSQLQuery);
             //обновление dataGridView1
             selectCommand = "select * from Material";
@@ -130,7 +130,6 @@ namespace EIS
             toolStripTextBox1.Text = "";
             toolStripTextBox2.Text = "";
             toolStripTextBox3.Text = "";
-            toolStripTextBoxRemains.Text = "";
         }
         public void changeValue(string ConnectionString, String selectCommand)
         {
@@ -170,11 +169,6 @@ namespace EIS
                     return;
                 }
             }
-            if (toolStripTextBoxRemains.Text == "")
-            {
-                MessageBox.Show("Введите остаток материала на складе");
-                return;
-            }
             string percent = toolStripTextBox3.Text.Replace(".", ",");
             int percent1 = Convert.ToInt32(Convert.ToDouble(percent));
             if (percent1 >= 100)
@@ -198,9 +192,6 @@ namespace EIS
             string changeNDS = toolStripTextBox3.Text;
             String selectNDS = "update Material set NDS='" + changeNDS + "'where IdMaterial = " + valueId;
             changeValue(ConnectionString, selectNDS);
-            string changeRemains = toolStripTextBoxRemains.Text;
-            String selectRemains = "update Material set Remains='" + changeRemains + "'where IdMaterial = " + valueId;
-            changeValue(ConnectionString, selectRemains);
             //обновление dataGridView1
             selectCommand = "select * from Material";
             refreshForm(ConnectionString, selectCommand);
@@ -217,8 +208,7 @@ DataGridViewCellMouseEventArgs e)
             toolStripTextBox2.Text = costId;
             string ndsId = dataGridView1[3, CurrentRow].Value.ToString();
             toolStripTextBox3.Text = ndsId;
-            string remainsId = dataGridView1[4, CurrentRow].Value.ToString();
-            toolStripTextBoxRemains.Text = remainsId;
+
         }
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)

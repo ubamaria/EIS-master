@@ -148,12 +148,26 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             {
                 MaxValue = Convert.ToInt32(maxValue) + 1;
             }
-            int RequestedCount = Convert.ToInt32(textBoxRequested.Text);
-            int RemainsCount = Convert.ToInt32(toolStripTextBoxRemains.Text);
-            int countMaterial = RequestedCount - RemainsCount;
+            string selectMaterial = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
+                + toolStripComboBoxMaterial.Text + "'";
+            object dtCount = selectValue(ConnectionString, selectMaterial);
+            selectCommand = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
+                + toolStripComboBoxMaterial.Text + "'";
+            object ktCount = selectValue(ConnectionString, selectCommand);
+            if (dtCount == DBNull.Value)
+            {
+                dtCount = 0;
+            }
+            if (ktCount == DBNull.Value)
+            {
+                ktCount = 0;
+            }
+            int countOst = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount);
+            int countReq = Convert.ToInt32(textBoxRequested.Text);
+            int count = countReq - countOst;
             double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
 
-            double price = countMaterial * MPrice;
+            double price = count * MPrice;
             string selectNDS = "select nds from material where idmaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
             double nds = Convert.ToDouble(selectValue(ConnectionString, selectNDS));
             double SumNDS = (nds*price)/100;
@@ -162,27 +176,27 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             string material = toolStripComboBoxMaterial.ComboBox.Text;
             string provider = toolStripComboBoxProvider.ComboBox.Text;
 
-            if (countMaterial <= 0)
+            if (count <= 0)
             {
                 MessageBox.Show("Остатки материалов достаточны для удовлетворения заявки");
                 return;
             }
 
             string txtSQLQuery = "insert into TablePartOperation (Id, IdMaterial, IdRequest, IdProvider, CountMaterial, Price, NDS) values (" + MaxValue+ ", '" +
-                toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + idRequest + "', '" + toolStripComboBoxProvider.ComboBox.SelectedValue + "', '" + countMaterial + "', '" + price + "', '" + SumNDS + "')";
+                toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + idRequest + "', '" + toolStripComboBoxProvider.ComboBox.SelectedValue + "', '" + count + "', '" + price + "', '" + SumNDS + "')";
             ExecuteQuery(txtSQLQuery);
 
             txtSQLQuery = "insert into JournalEntries (Date, Dt, " +
         "SubcontoDt1, SubcontoDt2, Kt, SubcontoKt1, SubcontoKt2, Count, Sum, " +
         "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") +
         "', '10', '" + material + "', '', '60', '" + provider + "', '" + idRequest +
-        "', '" + countMaterial + "', '" + price + "', '" + idJO + "')";
+        "', '" + count + "', '" + price + "', '" + idJO + "')";
             ExecuteQuery(txtSQLQuery);
             txtSQLQuery = "insert into JournalEntries (Date, Dt, " +
         "SubcontoDt1, SubcontoDt2, Kt, SubcontoKt1, SubcontoKt2, Count, Sum, " +
         "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") +
         "', '19', '', '', '60', '" + provider + "', '" + idRequest +
-        "', '" + countMaterial + "', '" + SumNDS + "', '" + idJO + "')";
+        "', '" + count + "', '" + SumNDS + "', '" + idJO + "')";
             ExecuteQuery(txtSQLQuery);
 
             selectCommand = "Select TP.Id, M.Name, TP.IdRequest," +
@@ -195,13 +209,18 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
 
         private void toolStripButtonChange_Click(object sender, EventArgs e)
         {
+
             int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
             string valueId = dataGridView1[0, CurrentRow].Value.ToString();
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
+            string selectMaterial = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
+    + toolStripComboBoxMaterial.Text + "'";
+            object dtCount = selectValue(ConnectionString, selectMaterial);
+            String selectCommand = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
+                + toolStripComboBoxMaterial.Text + "'";
+            object ktCount = selectValue(ConnectionString, selectCommand);
 
-            int RequestedCount = Convert.ToInt32(textBoxRequested.Text);
-            int RemainsCount = Convert.ToInt32(toolStripTextBoxRemains.Text);
-            int countMaterial = RequestedCount - RemainsCount;
+            int countMaterial = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount);
             double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
             double price = countMaterial * MPrice;
             string selectNDS = "select nds from material where idmaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
@@ -232,7 +251,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             txtSQLQuery = "update JournalEntries set Sum = '" + nds + "' where IdJournalOfOperations = '" + idJO + "' and Dt = '19'";
             ExecuteQuery(txtSQLQuery);
 
-            string selectCommand = "Select TP.Id, M.Name, TP.IdRequest," +
+            selectCommand = "Select TP.Id, M.Name, TP.IdRequest," +
                 " TP.CountMaterial, TP.IdMaterial, TP.IdProvider" +
                 " From TablePartOperation TP" +
                 " Join Material M On TP.IdMaterial = M.IdMaterial" +
@@ -267,9 +286,6 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
         {
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
 
-            String selectRemains = "select Remains from Material where IdMaterial='" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
-            toolStripTextBoxRemains.Text = Convert.ToString(selectValue(ConnectionString, selectRemains));
-
             String selectMPrice = "select CostMaterial from Material where IdMaterial='" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
             toolStripTextBoxMPrice.Text = Convert.ToString(selectValue(ConnectionString, selectMPrice));
 
@@ -278,9 +294,14 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             textBoxRequested.Text = Convert.ToString(selectValue(ConnectionString, selectRequested));
             try
             {
-                int RequestedCount = Convert.ToInt32(textBoxRequested.Text);
-                int RemainsCount = Convert.ToInt32(toolStripTextBoxRemains.Text);
-                int countMaterial = RequestedCount - RemainsCount;
+                ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
+                string selectMaterial = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
+                + toolStripComboBoxMaterial.Text + "'";
+                object dtCount = selectValue(ConnectionString, selectMaterial);
+                String selectCommand = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
+                    + toolStripComboBoxMaterial.Text + "'";
+                object ktCount = selectValue(ConnectionString, selectCommand);
+                int countMaterial = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount);
                 double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
                 double SumBuy = MPrice * countMaterial;
                 toolStripTextBoxSumBuy.Text = SumBuy.ToString();
@@ -303,9 +324,14 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
         {
             try
             {
-                int RequestedCount = Convert.ToInt32(textBoxRequested.Text);
-                int RemainsCount = Convert.ToInt32(toolStripTextBoxRemains.Text);
-                int countMaterial = RequestedCount - RemainsCount;
+                string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
+                string selectMaterial = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
+                + toolStripComboBoxMaterial.Text + "'";
+                object dtCount = selectValue(ConnectionString, selectMaterial);
+                String selectCommand = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
+                    + toolStripComboBoxMaterial.Text + "'";
+                object ktCount = selectValue(ConnectionString, selectCommand);
+                int countMaterial = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount);
                 double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
                 double price = countMaterial * MPrice;
                 double SumBuy = MPrice * countMaterial;

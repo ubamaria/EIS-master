@@ -38,8 +38,6 @@
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBoxRemains = new System.Windows.Forms.ToolStripTextBox();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonChange = new System.Windows.Forms.ToolStripButton();
@@ -77,8 +75,6 @@
             this.toolStripTextBox2,
             this.toolStripLabel4,
             this.toolStripTextBox3,
-            this.toolStripLabel3,
-            this.toolStripTextBoxRemains,
             this.bindingNavigatorSeparator2,
             this.toolStripButton1,
             this.toolStripButtonChange,
@@ -90,7 +86,7 @@
             this.bindingNavigator1.MovePreviousItem = null;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = null;
-            this.bindingNavigator1.Size = new System.Drawing.Size(853, 31);
+            this.bindingNavigator1.Size = new System.Drawing.Size(853, 27);
             this.bindingNavigator1.TabIndex = 1;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -134,19 +130,6 @@
             this.toolStripTextBox3.Size = new System.Drawing.Size(100, 27);
             this.toolStripTextBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBox3_KeyPress);
             // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(63, 24);
-            this.toolStripLabel3.Text = "Остаток";
-            // 
-            // toolStripTextBoxRemains
-            // 
-            this.toolStripTextBoxRemains.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripTextBoxRemains.MaxLength = 6;
-            this.toolStripTextBoxRemains.Name = "toolStripTextBoxRemains";
-            this.toolStripTextBoxRemains.Size = new System.Drawing.Size(76, 27);
-            // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
@@ -158,7 +141,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.RightToLeftAutoMirrorImage = true;
-            this.toolStripButton1.Size = new System.Drawing.Size(29, 28);
+            this.toolStripButton1.Size = new System.Drawing.Size(29, 24);
             this.toolStripButton1.Text = "Добавить";
             this.toolStripButton1.Click += new System.EventHandler(this.bindingNavigatorAddNewItem_Click);
             // 
@@ -214,8 +197,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxRemains;
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
     }
