@@ -52,7 +52,7 @@ namespace EIS
                 toolStripComboBoxMaterial.SelectedIndex = -1;
                 string selectJO = "select IdJournalOfOperations from JournalOfOperations where IdRequest = '" + idRequest + "'";
                 object id = selectValue(ConnectionString, selectJO);
-                if (id != DBNull.Value)
+                if (id != "")
                 {
                     IdJO = Convert.ToInt32(id);
                 }

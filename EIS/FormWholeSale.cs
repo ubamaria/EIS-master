@@ -58,5 +58,10 @@ namespace EIS
             var newForm = new FormJournalEntries();
             newForm.Show();
         }
+
+        private void отчетыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormReport().Show();
+        }
     }
 }
