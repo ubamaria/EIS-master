@@ -44,6 +44,8 @@ namespace EIS
             {
                 selectCommand = "Select IdBuyer From request Where IdRequest =" + _idRequest;
                 toolStripComboBoxBuyer.ComboBox.SelectedValue = Convert.ToInt32(selectValue(ConnectionString, selectCommand));
+                selectCommand = "Select RequestDate From request Where IdRequest =" + _idRequest;
+                dateTimePicker.Value = Convert.ToDateTime(selectValue(ConnectionString, selectCommand));
             }
             else
             {
@@ -205,7 +207,7 @@ namespace EIS
                 { //add
                     string txtSQLQuery = "insert into Request (IdRequest, IdBuyer, Count, RequestDate) values (" +
                         _idRequest + ", '" + toolStripComboBoxBuyer.ComboBox.SelectedValue + "', '" +
-                        countReq + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "')";
+                        countReq + "', '" + dateTimePicker.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") + "')";
                     ExecuteQuery(txtSQLQuery);
                 }
                 else
@@ -213,6 +215,8 @@ namespace EIS
                     string txtSQLQuery = "update Request set IdBuyer ='" + toolStripComboBoxBuyer.ComboBox.SelectedValue + "' where IdRequest =" + _idRequest;
                     ExecuteQuery(txtSQLQuery);
                     txtSQLQuery = "update Request set Count ='" + countReq + "' where IdRequest =" + _idRequest;
+                    ExecuteQuery(txtSQLQuery);
+                    txtSQLQuery = "update Request set RequestDate ='" + dateTimePicker.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") + "' where IdRequest =" + _idRequest;
                     ExecuteQuery(txtSQLQuery);
                 }
             }

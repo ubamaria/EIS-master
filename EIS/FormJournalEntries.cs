@@ -49,9 +49,11 @@ namespace EIS
         {
             string ConnectionString = @"Data Source=" + sPath +
 ";New=False;Version=3";
-            String selectCommand = "Select IdJournalEntries, Date, Dt, SubcontoDt1, SubcontoDt2, " +
-                "Kt, SubcontoKt1, SubcontoKt2, Count, Sum, IdJournalOfOperations " +
-                "FROM JournalEntries";
+            String selectCommand = "Select IdJournalEntries, Date, F.AccountNumber AS DT, SubcontoDt1, SubcontoDt2, " +
+                "S.AccountNumber AS KT, SubcontoKt1, SubcontoKt2, Count, Sum, IdJournalOfOperations " +
+                "FROM JournalEntries " +
+                "Join ChartOfAccounts F On F.idChartOfAccounts = Dt " +
+                "Join ChartOfAccounts S On S.idChartOfAccounts = Kt";
             if (!checkBoxAll.Checked)
             {
                 selectCommand += " Where Date >= '" + dateTimePickerFrom.Value.ToString("yyyy-MM-dd") + 

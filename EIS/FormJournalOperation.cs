@@ -129,6 +129,15 @@ connect);
             var form = new FormTablePartOperation();
             form.IdRequest = Convert.ToInt32(toolStripComboBoxRequest.ComboBox.SelectedValue);
             form.NameBuy = toolStripTextBoxName.Text;
+            string selectDate = "select RequestDate from request where idRequest = '" +
+                Convert.ToInt32(toolStripComboBoxRequest.ComboBox.SelectedValue) + "'";
+            DateTime reqDate = Convert.ToDateTime(selectValue(ConnectionString, selectDate));
+            if (dateTimePicker1.Value < reqDate)
+            {
+                MessageBox.Show("Дата операции должна быть мень даты заявки - " + reqDate);
+                return;
+            }
+            form.Date = dateTimePicker1.Value;
             form.FormClosed += new FormClosedEventHandler(formTPOclosed);
             form.Show();
         }
@@ -139,12 +148,21 @@ connect);
             string valueId = dataGridView1[0, CurrentRow].Value.ToString();
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
 
+            string selectDate = "select RequestDate from request where idRequest = '" +
+                Convert.ToInt32(toolStripComboBoxRequest.ComboBox.SelectedValue) + "'";
+            DateTime reqDate = Convert.ToDateTime(selectValue(ConnectionString, selectDate));
+            if (dateTimePicker1.Value < reqDate)
+            {
+                MessageBox.Show("Дата операции должна быть мень даты заявки - " + reqDate);
+                return;
+            }
+
             string changeName = toolStripTextBoxName.Text;
             String selectName = "update JournalOfOperations set NameBuy='" + changeName + "'where IdJournalOfOperations = " + valueId;
             changeValue(ConnectionString, selectName);
 
             string changeDate = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            String selectDate = "update JournalOfOperations set Date='" + changeDate + "'where IdJournalOfOperations = " + valueId;
+            selectDate = "update JournalOfOperations set Date='" + changeDate + "'where IdJournalOfOperations = " + valueId;
             changeValue(ConnectionString, selectDate);
 
             string selectCommand = "Select JO.IdJournalOfOperations, JO.NameBuy, JO.Date," +
@@ -208,6 +226,7 @@ connect);
 
                 form.IdJO = CurrentRow;
                 form.NameBuy = toolStripTextBoxName.Text;
+                form.Date = dateTimePicker1.Value;
                 form.FormClosed += new FormClosedEventHandler(formTPOclosed);
                 form.Show();
             }
