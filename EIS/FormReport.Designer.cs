@@ -35,6 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.buttonPDF = new System.Windows.Forms.Button();
+            this.labelSum = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,14 +100,35 @@
             this.dataGridView1.Location = new System.Drawing.Point(15, 38);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(773, 400);
+            this.dataGridView1.Size = new System.Drawing.Size(773, 359);
             this.dataGridView1.TabIndex = 6;
+            // 
+            // buttonPDF
+            // 
+            this.buttonPDF.Location = new System.Drawing.Point(503, 10);
+            this.buttonPDF.Name = "buttonPDF";
+            this.buttonPDF.Size = new System.Drawing.Size(75, 23);
+            this.buttonPDF.TabIndex = 7;
+            this.buttonPDF.Text = "В PDF";
+            this.buttonPDF.UseVisualStyleBackColor = true;
+            this.buttonPDF.Click += new System.EventHandler(this.buttonPDF_Click);
+            // 
+            // labelSum
+            // 
+            this.labelSum.AutoSize = true;
+            this.labelSum.Location = new System.Drawing.Point(12, 416);
+            this.labelSum.Name = "labelSum";
+            this.labelSum.Size = new System.Drawing.Size(43, 13);
+            this.labelSum.TabIndex = 8;
+            this.labelSum.Text = "Итого: ";
             // 
             // FormReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelSum);
+            this.Controls.Add(this.buttonPDF);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -131,5 +154,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button buttonPDF;
+        private System.Windows.Forms.Label labelSum;
     }
 }
