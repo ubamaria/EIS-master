@@ -180,10 +180,14 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
                 MaxValue = Convert.ToInt32(maxValue) + 1;
             }
             string selectDT = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
+                 + toolStripComboBoxMaterial.ComboBox.Text + "' " +
+                 "and Date <= '" + date.ToString("yyyy-MM-dd") + "' " +
+                 "and Dt = '1'";
             object dtCount = selectValue(ConnectionString, selectDT);
             string selectKT = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' " +
+                "and Date <= '" + date.ToString("yyyy-MM-dd") + "' " +
+                "and Dt = '1'";
             object ktCount = selectValue(ConnectionString, selectKT);
             if (dtCount == DBNull.Value)
             {
@@ -219,14 +223,14 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
 
             txtSQLQuery = "insert into JournalEntries (Date, Dt, " +
         "SubcontoDt1, SubcontoDt2, Kt, SubcontoKt1, SubcontoKt2, Count, Sum, " +
-        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd H:mm") +
+        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd") +
         "', '1', '" + material + "', '', '2', '" + provider + "', '" + idRequest +
         "', '" + countBuy + "', '" + price + "', '" + idJO + "')";
             ExecuteQuery(txtSQLQuery);
             txtSQLQuery = "insert into JournalEntries (Date, Dt, " +
         "SubcontoDt1, SubcontoDt2, Kt, SubcontoKt1, SubcontoKt2, Count, Sum, " +
-        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd H:mm") +
-        "', '3', '', '', '2', '" + provider + "', '" + idRequest +
+        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd") +
+        "', '3', '" + material + "', '', '2', '" + provider + "', '" + idRequest +
         "', '" + countBuy + "', '" + SumNDS + "', '" + idJO + "')";
             ExecuteQuery(txtSQLQuery);
 
@@ -240,15 +244,24 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
 
         private void toolStripButtonChange_Click(object sender, EventArgs e)
         {
+            if (toolStripTextBoxCount.Text == "")
+            {
+                MessageBox.Show("Заполните количество");
+                return;
+            }
             int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
             string valueId = dataGridView1[0, CurrentRow].Value.ToString();
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
 
             string selectDT = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' " +
+                "and Date <= '" + date.ToString("yyyy-MM-dd") + "' " +
+                "and Dt = '1'";
             object dtCount = selectValue(ConnectionString, selectDT);
             string selectKT = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' " +
+                "and Date <= '" + date.ToString("yyyy-MM-dd") + "' " +
+                "and Dt = '1'";
             object ktCount = selectValue(ConnectionString, selectKT);
             if (dtCount == DBNull.Value)
             {
@@ -271,6 +284,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             double price = countBuy * MPrice;
             string selectNDS = "select nds from material where idmaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
             double nds = Convert.ToDouble(selectValue(ConnectionString, selectNDS));
+            double SumNDS = (nds * price) / 100;
 
             string changeCountMaterial = Convert.ToString(countBuy);
             String selectCountMaterial = "update TablePartOperation set CountMaterial='" + changeCountMaterial + "'where Id = " + valueId;
@@ -287,14 +301,17 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             String selectPrice = "update TablePartOperation set Price='" + price + "'where Id = " + valueId;
             changeValue(ConnectionString, selectPrice);
 
-            String selectnds = "update TablePartOperation set NDS='" + nds + "'where Id = " + valueId;
+            String selectnds = "update TablePartOperation set NDS='" + SumNDS + "'where Id = " + valueId;
             changeValue(ConnectionString, selectnds);
 
-            string txtSQLQuery = "update JournalEntries set Count = '" + countBuy + "' where IdJournalOfOperations = '" + idJO + "'";
+            string txtSQLQuery = "update JournalEntries set Count = '" + countBuy + "' where IdJournalOfOperations = '" + idJO + "' " +
+                "and SubcontoDt1 = '" + toolStripComboBoxMaterial.Text + "'";
             ExecuteQuery(txtSQLQuery);
-            txtSQLQuery = "update JournalEntries set Sum = '" + price + "' where IdJournalOfOperations = '" + idJO + "' and DT = '1'";
+            txtSQLQuery = "update JournalEntries set Sum = '" + price + "' where IdJournalOfOperations = '" + idJO + "' and DT = '1' " +
+                "and SubcontoDt1 = '" + toolStripComboBoxMaterial.Text + "'";
             ExecuteQuery(txtSQLQuery);
-            txtSQLQuery = "update JournalEntries set Sum = '" + nds + "' where IdJournalOfOperations = '" + idJO + "' and DT = '3'";
+            txtSQLQuery = "update JournalEntries set Sum = '" + SumNDS + "' where IdJournalOfOperations = '" + idJO + "' and DT = '3' " +
+                "and SubcontoDt1 = '" + toolStripComboBoxMaterial.Text + "'";
             ExecuteQuery(txtSQLQuery);
 
             string selectCommand = "Select TP.Id, M.Name, TP.IdRequest," +
@@ -341,10 +358,14 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             try
             {
                 string selectDT = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
+                    + toolStripComboBoxMaterial.ComboBox.Text + "' " +
+                    "and Date <= '" + date.ToString("yyyy-MM-dd") + "' " +
+                    "and Dt = '1'";
                 object dtCount = selectValue(ConnectionString, selectDT);
                 string selectKT = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
-                    + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
+                    + toolStripComboBoxMaterial.ComboBox.Text + "' " +
+                    "and Date <= '" + date.ToString("yyyy-MM-dd") + "' " +
+                    "and Dt = '1'";
                 object ktCount = selectValue(ConnectionString, selectKT);
                 if (dtCount == DBNull.Value)
                 {
@@ -407,7 +428,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
                 if (idJO == -1)//add
                 {
                     string txtSQLQuery = "insert into JournalOfOperations (IdJournalOfOperations, NameBuy, Date, CountBuy, SumBuy, SumNDS, IdRequest) " +
-                        "values ('" + MaxValue + "', '" + nameBuy + "', '" + date.ToString("yyyy-MM-dd H:mm") + "', '" +
+                        "values ('" + MaxValue + "', '" + nameBuy + "', '" + date.ToString("yyyy-MM-dd") + "', '" +
                         countBuy + "', '" + SumPrice + "', '" + sumNDS + "', '" + idRequest + "')";
                     ExecuteQuery(txtSQLQuery);
                     txtSQLQuery = "update JournalEntries set IdJournalOfOperations = '" + MaxValue + "' where IdJournalOfOperations = '-1'";

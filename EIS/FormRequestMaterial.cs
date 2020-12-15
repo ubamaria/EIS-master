@@ -215,7 +215,7 @@ namespace EIS
                 { //add
                     string txtSQLQuery = "insert into Request (IdRequest, IdBuyer, Count, RequestDate) values (" +
                         _idRequest + ", '" + toolStripComboBoxBuyer.ComboBox.SelectedValue + "', '" +
-                        countReq + "', '" + dateTimePicker.Value.ToString("yyyy-MM-dd H:mm") + "')";
+                        countReq + "', '" + dateTimePicker.Value.ToString("yyyy-MM-dd") + "')";
                     ExecuteQuery(txtSQLQuery);
                 }
                 else
@@ -224,7 +224,7 @@ namespace EIS
                     ExecuteQuery(txtSQLQuery);
                     txtSQLQuery = "update Request set Count ='" + countReq + "' where IdRequest =" + _idRequest;
                     ExecuteQuery(txtSQLQuery);
-                    txtSQLQuery = "update Request set RequestDate ='" + dateTimePicker.Value.ToString("yyyy-MM-dd H:mm") + "' where IdRequest =" + _idRequest;
+                    txtSQLQuery = "update Request set RequestDate ='" + dateTimePicker.Value.ToString("yyyy-MM-dd") + "' where IdRequest =" + _idRequest;
                     ExecuteQuery(txtSQLQuery);
                 }
             }

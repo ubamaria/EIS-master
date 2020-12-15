@@ -56,8 +56,8 @@ namespace EIS
                 "Join ChartOfAccounts S On S.idChartOfAccounts = Kt";
             if (!checkBoxAll.Checked)
             {
-                selectCommand += " Where Date >= '" + dateTimePickerFrom.Value.ToString("yyyy-MM-dd H:mm") + 
-                    "' and Date <= '" + dateTimePickerTo.Value.ToString("yyyy-MM-dd H:mm") + "'";
+                selectCommand += " Where Date >= '" + dateTimePickerFrom.Value.ToString("yyyy-MM-dd") + 
+                    "' and Date <= '" + dateTimePickerTo.Value.ToString("yyyy-MM-dd") + "'";
             }
             if (idJO != -1)
             {

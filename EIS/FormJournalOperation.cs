@@ -161,7 +161,7 @@ connect);
             String selectName = "update JournalOfOperations set NameBuy='" + changeName + "'where IdJournalOfOperations = " + valueId;
             changeValue(ConnectionString, selectName);
 
-            string changeDate = dateTimePicker1.Value.ToString("yyyy-MM-dd H:mm");
+            string changeDate = dateTimePicker1.Value.ToString("yyyy-MM-dd");
             selectDate = "update JournalOfOperations set Date='" + changeDate + "'where IdJournalOfOperations = " + valueId;
             changeValue(ConnectionString, selectDate);
 

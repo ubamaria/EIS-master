@@ -149,7 +149,7 @@ namespace EIS
         private void formRMclosed(object sender, FormClosedEventArgs e)
         {
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
-            string selectCommand = "Select Request.IdRequest,Buyer.FIO, Request.Count, Request.RequestDate FROM Request Join Buyer On Buyer.IdBuyer=Request.IdBuyer";
+            string selectCommand = "Select Request.IdRequest, Buyer.FIO, Request.Count, Request.RequestDate FROM Request Join Buyer On Buyer.IdBuyer=Request.IdBuyer";
             refreshForm(ConnectionString, selectCommand);
         }
     }
