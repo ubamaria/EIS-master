@@ -146,6 +146,16 @@ namespace EIS
                     _idRequest = Convert.ToInt32(idReqValue) + 1;
                 }
             }
+
+            string selectMaterial = "select Id from RequestMaterial where IdMaterial = '" +
+               toolStripComboBoxMaterial.ComboBox.SelectedValue + "' and IdRequest = '" + _idRequest + "'";
+
+            if (selectValue(ConnectionString, selectMaterial) != "")
+            {
+                MessageBox.Show("Такой материал уже запрошен");
+                return;
+            }
+
             string txtSQLQuery = "insert into RequestMaterial (Id, IdRequest, IdMaterial, Count) values ('" +
           (Convert.ToInt32(maxValue) + 1) + "', '" + _idRequest + "', '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + toolStripTextBoxCount.Text + "')";
             ExecuteQuery(txtSQLQuery);
@@ -159,9 +169,7 @@ namespace EIS
             int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
             string valueId = dataGridView1[0, CurrentRow].Value.ToString();
 
-            string txtSQLQuery = "update RequestMaterial set idMaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "' where Id = " + valueId;
-            ExecuteQuery(txtSQLQuery);
-            txtSQLQuery = "update RequestMaterial set Count = '" + toolStripTextBoxCount.Text + "' where Id = " + valueId;
+            string txtSQLQuery = "update RequestMaterial set Count = '" + toolStripTextBoxCount.Text + "' where Id = " + valueId;
             ExecuteQuery(txtSQLQuery);
 
             string ConnectionString = @"Data Source=" + sPath +
@@ -207,7 +215,7 @@ namespace EIS
                 { //add
                     string txtSQLQuery = "insert into Request (IdRequest, IdBuyer, Count, RequestDate) values (" +
                         _idRequest + ", '" + toolStripComboBoxBuyer.ComboBox.SelectedValue + "', '" +
-                        countReq + "', '" + dateTimePicker.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") + "')";
+                        countReq + "', '" + dateTimePicker.Value.ToString("yyyy-MM-dd H:mm") + "')";
                     ExecuteQuery(txtSQLQuery);
                 }
                 else
@@ -216,7 +224,7 @@ namespace EIS
                     ExecuteQuery(txtSQLQuery);
                     txtSQLQuery = "update Request set Count ='" + countReq + "' where IdRequest =" + _idRequest;
                     ExecuteQuery(txtSQLQuery);
-                    txtSQLQuery = "update Request set RequestDate ='" + dateTimePicker.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") + "' where IdRequest =" + _idRequest;
+                    txtSQLQuery = "update Request set RequestDate ='" + dateTimePicker.Value.ToString("yyyy-MM-dd H:mm") + "' where IdRequest =" + _idRequest;
                     ExecuteQuery(txtSQLQuery);
                 }
             }

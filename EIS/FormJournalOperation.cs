@@ -134,7 +134,7 @@ connect);
             DateTime reqDate = Convert.ToDateTime(selectValue(ConnectionString, selectDate));
             if (dateTimePicker1.Value < reqDate)
             {
-                MessageBox.Show("Дата операции должна быть мень даты заявки - " + reqDate);
+                MessageBox.Show("Дата операции должна быть меньше даты заявки - " + reqDate);
                 return;
             }
             form.Date = dateTimePicker1.Value;
@@ -161,7 +161,7 @@ connect);
             String selectName = "update JournalOfOperations set NameBuy='" + changeName + "'where IdJournalOfOperations = " + valueId;
             changeValue(ConnectionString, selectName);
 
-            string changeDate = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            string changeDate = dateTimePicker1.Value.ToString("yyyy-MM-dd H:mm");
             selectDate = "update JournalOfOperations set Date='" + changeDate + "'where IdJournalOfOperations = " + valueId;
             changeValue(ConnectionString, selectDate);
 
@@ -179,9 +179,12 @@ connect);
             int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
             //получить значение idMOL выбранной строки
             string valueId = dataGridView1[0, CurrentRow].Value.ToString();
-            String selectCommand = "delete from JournalOfOperations where IdJournalOfOperations=" + valueId;
             string ConnectionString = @"Data Source=" + sPath +
            ";New=False;Version=3";
+
+            String selectCommand = "delete from JournalEntries where IdJournalOfOperations=" + valueId;
+            changeValue(ConnectionString, selectCommand);
+            selectCommand = "delete from JournalOfOperations where IdJournalOfOperations=" + valueId;
             changeValue(ConnectionString, selectCommand);
             selectCommand = "delete from TablePartOperation where IdRequest = '"
                 + Convert.ToInt32(toolStripComboBoxRequest.ComboBox.SelectedValue) + "'";
@@ -222,7 +225,8 @@ connect);
                 try
                 {
                     form.IdRequest = Convert.ToInt32(selectValue(ConnectionString, selectCommand));
-                } catch (Exception) { }
+                }
+                catch (Exception) { }
 
                 form.IdJO = CurrentRow;
                 form.NameBuy = toolStripTextBoxName.Text;
@@ -243,6 +247,18 @@ connect);
                 " Join Request R On R.IdRequest = JO.IdRequest" +
                 " Join Buyer B On R.IdBuyer = B.IdBuyer";
             refreshForm(ConnectionString, selectCommand);
+        }
+
+        private void buttonJE_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                var form = new FormJournalEntries();
+                int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
+                int valueId = Convert.ToInt32(dataGridView1[0, CurrentRow].Value);
+                form.IdJO = valueId;
+                form.Show();
+            }
         }
     }
 }

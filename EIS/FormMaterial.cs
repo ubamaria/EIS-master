@@ -218,9 +218,24 @@ DataGridViewCellMouseEventArgs e)
                 int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
                 //получить значение idMOL выбранной строки
                 string valueId = dataGridView1[0, CurrentRow].Value.ToString();
-                String selectCommand = "delete from Material where IdMaterial=" + valueId;
+                string name = dataGridView1[1, CurrentRow].Value.ToString();
                 string ConnectionString = @"Data Source=" + sPath +
                ";New=False;Version=3";
+                String selectCommand = "delete from JournalEntries where IdJournalOfOperations = " +
+                    "(select IdJournalOfOperations from JournalOfOperations where IdRequest = " +
+                    "(select IdRequest from RequestMaterial where IdMaterial = '" + valueId + "'))";
+                changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from JournalOfOperations where IdRequest = " +
+                    "(select IdRequest from RequestMaterial where IdMaterial = '" + valueId + "')";
+                changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from TablePartOperation where IdRequest = " +
+                    "(select IdRequest from RequestMaterial where IdMaterial = '" + valueId + "')";
+                changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from Request where IdRequest = " +
+                    "(select IdRequest from RequestMaterial where IdMaterial = '" + valueId + "')";
+                selectCommand = "delete from RequestMaterial where IdMaterial = '" + valueId + "'";
+                changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from Material where IdMaterial = '" + valueId + "'";
                 changeValue(ConnectionString, selectCommand);
                 //обновление dataGridView1
                 selectCommand = "select * from Material";

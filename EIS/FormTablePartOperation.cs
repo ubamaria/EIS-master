@@ -58,11 +58,6 @@ namespace EIS
                 }
             }
 
-            if (idJO == -1)
-            {
-                buttonJE.Enabled = false;
-            }
-
             string selectProvider = "select IdProvider, Organization from Provider";
             selectCombo(ConnectionString, selectProvider, toolStripComboBoxProvider, "Organization", "IdProvider");
         }
@@ -152,6 +147,31 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
+            if (toolStripTextBoxCount.Text == "")
+            {
+                MessageBox.Show("Заполните количество");
+                return;
+            }
+            if (toolStripComboBoxMaterial.SelectedIndex < 0)
+            {
+                MessageBox.Show("Выберите материал");
+                return;
+            }
+
+            string selectMaterial = "select Id from TablePartOperation where IdMaterial = '" +
+                toolStripComboBoxMaterial.ComboBox.SelectedValue + "' and IdRequest = '" + idRequest + "'";
+            
+            if (selectValue(ConnectionString, selectMaterial) != "")
+            {
+                MessageBox.Show("Такой материал уже закуплен");
+                return;
+            }
+
+            if (toolStripComboBoxProvider.SelectedIndex < 0)
+            {
+                MessageBox.Show("Выберите поставщика");
+                return;
+            }
             String selectCommand = "select MAX(Id) from TablePartOperation";
             object maxValue = selectValue(ConnectionString, selectCommand);
             int MaxValue = 0;
@@ -160,10 +180,10 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
                 MaxValue = Convert.ToInt32(maxValue) + 1;
             }
             string selectDT = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
             object dtCount = selectValue(ConnectionString, selectDT);
             string selectKT = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
             object ktCount = selectValue(ConnectionString, selectKT);
             if (dtCount == DBNull.Value)
             {
@@ -175,11 +195,11 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             }
             int countOst = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount);
             toolStripTextBoxRemains.Text = countOst.ToString();
-            int countReq = Convert.ToInt32(textBoxRequested.Text);
-            int count = countReq - countOst;
+            int count = Convert.ToInt32(toolStripTextBoxCount.Text);
+            int countBuy = count - countOst;
             double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
 
-            double price = count * MPrice;
+            double price = countBuy * MPrice;
             string selectNDS = "select nds from material where idmaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
             double nds = Convert.ToDouble(selectValue(ConnectionString, selectNDS));
             double SumNDS = (nds*price)/100;
@@ -187,27 +207,27 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             string material = toolStripComboBoxMaterial.ComboBox.Text;
             string provider = toolStripComboBoxProvider.ComboBox.Text;
 
-            if (count <= 0)
+            if (count <= countOst)
             {
                 MessageBox.Show("Остатки материалов достаточны для удовлетворения заявки");
                 return;
             }
 
             string txtSQLQuery = "insert into TablePartOperation (Id, IdMaterial, IdRequest, IdProvider, CountMaterial, Price, NDS) values (" + MaxValue+ ", '" +
-                toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + idRequest + "', '" + toolStripComboBoxProvider.ComboBox.SelectedValue + "', '" + count + "', '" + price + "', '" + SumNDS + "')";
+                toolStripComboBoxMaterial.ComboBox.SelectedValue + "', '" + idRequest + "', '" + toolStripComboBoxProvider.ComboBox.SelectedValue + "', '" + countBuy + "', '" + price + "', '" + SumNDS + "')";
             ExecuteQuery(txtSQLQuery);
 
             txtSQLQuery = "insert into JournalEntries (Date, Dt, " +
         "SubcontoDt1, SubcontoDt2, Kt, SubcontoKt1, SubcontoKt2, Count, Sum, " +
-        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") +
+        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd H:mm") +
         "', '1', '" + material + "', '', '2', '" + provider + "', '" + idRequest +
-        "', '" + count + "', '" + price + "', '" + idJO + "')";
+        "', '" + countBuy + "', '" + price + "', '" + idJO + "')";
             ExecuteQuery(txtSQLQuery);
             txtSQLQuery = "insert into JournalEntries (Date, Dt, " +
         "SubcontoDt1, SubcontoDt2, Kt, SubcontoKt1, SubcontoKt2, Count, Sum, " +
-        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") +
+        "IdJournalOfOperations) values ('" + date.ToString("yyyy-MM-dd H:mm") +
         "', '3', '', '', '2', '" + provider + "', '" + idRequest +
-        "', '" + count + "', '" + SumNDS + "', '" + idJO + "')";
+        "', '" + countBuy + "', '" + SumNDS + "', '" + idJO + "')";
             ExecuteQuery(txtSQLQuery);
 
             selectCommand = "Select TP.Id, M.Name, TP.IdRequest," +
@@ -225,10 +245,10 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
 
             string selectDT = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
             object dtCount = selectValue(ConnectionString, selectDT);
             string selectKT = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
             object ktCount = selectValue(ConnectionString, selectKT);
             if (dtCount == DBNull.Value)
             {
@@ -238,21 +258,21 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             {
                 ktCount = 0;
             }
-            int countOst = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount);
-            int countReq = Convert.ToInt32(textBoxRequested.Text);
-            int count = countReq - countOst;
-            if (count <= 0)
+            int countOst = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount) - Convert.ToInt32(dataGridView1[3, CurrentRow].Value);
+            int count = Convert.ToInt32(toolStripTextBoxCount.Text);
+            int countBuy = count - countOst;
+            if (count <= countOst) 
             {
                 MessageBox.Show("Остатки материалов достаточны для удовлетворения заявки");
                 return;
             }
 
             double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
-            double price = count * MPrice;
+            double price = countBuy * MPrice;
             string selectNDS = "select nds from material where idmaterial = '" + toolStripComboBoxMaterial.ComboBox.SelectedValue + "'";
             double nds = Convert.ToDouble(selectValue(ConnectionString, selectNDS));
 
-            string changeCountMaterial = Convert.ToString(count);
+            string changeCountMaterial = Convert.ToString(countBuy);
             String selectCountMaterial = "update TablePartOperation set CountMaterial='" + changeCountMaterial + "'where Id = " + valueId;
             changeValue(ConnectionString, selectCountMaterial);
 
@@ -270,7 +290,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             String selectnds = "update TablePartOperation set NDS='" + nds + "'where Id = " + valueId;
             changeValue(ConnectionString, selectnds);
 
-            string txtSQLQuery = "update JournalEntries set Count = '" + count + "' where IdJournalOfOperations = '" + idJO + "'";
+            string txtSQLQuery = "update JournalEntries set Count = '" + countBuy + "' where IdJournalOfOperations = '" + idJO + "'";
             ExecuteQuery(txtSQLQuery);
             txtSQLQuery = "update JournalEntries set Sum = '" + price + "' where IdJournalOfOperations = '" + idJO + "' and DT = '1'";
             ExecuteQuery(txtSQLQuery);
@@ -321,10 +341,10 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             try
             {
                 string selectDT = "select Sum(Count) from JournalEntries where SubcontoDt1 = '"
-                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'";
+                + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
                 object dtCount = selectValue(ConnectionString, selectDT);
                 string selectKT = "select Sum(Count) from JournalEntries where SubcontoKt1 = '"
-                    + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'";
+                    + toolStripComboBoxMaterial.ComboBox.Text + "' and Date <= '" + date.ToString("yyyy-MM-dd H:mm") + "'";
                 object ktCount = selectValue(ConnectionString, selectKT);
                 if (dtCount == DBNull.Value)
                 {
@@ -336,16 +356,13 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
                 }
                 int countOst = Convert.ToInt32(dtCount) - Convert.ToInt32(ktCount);
                 int countReq = Convert.ToInt32(textBoxRequested.Text);
-                int count = countReq - countOst;
-                
                 toolStripTextBoxRemains.Text = countOst.ToString();
-                if (count <= 0)
-                {
-                    return;
-                }
                 double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
-                double SumBuy = MPrice * count;
-                toolStripTextBoxSumBuy.Text = SumBuy.ToString();
+                if (toolStripTextBoxCount.Text != "")
+                {
+                    double SumBuy = MPrice * Convert.ToInt32(toolStripTextBoxCount.Text);
+                    toolStripTextBoxSumBuy.Text = SumBuy.ToString();
+                }
             }
             catch (Exception) { }
         }
@@ -359,6 +376,13 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
 
             int ProviderId = Convert.ToInt32(dataGridView1[5, CurrentRow].Value);
             toolStripComboBoxProvider.ComboBox.SelectedValue = ProviderId;
+
+            double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
+            if (toolStripTextBoxCount.Text != "")
+            {
+                double SumBuy = MPrice * Convert.ToInt32(toolStripTextBoxCount.Text);
+                toolStripTextBoxSumBuy.Text = SumBuy.ToString();
+            }
         }
 
         private void FormTablePartOperation_FormClosed(object sender, FormClosedEventArgs e)
@@ -383,7 +407,7 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
                 if (idJO == -1)//add
                 {
                     string txtSQLQuery = "insert into JournalOfOperations (IdJournalOfOperations, NameBuy, Date, CountBuy, SumBuy, SumNDS, IdRequest) " +
-                        "values ('" + MaxValue + "', '" + nameBuy + "', '" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', '" +
+                        "values ('" + MaxValue + "', '" + nameBuy + "', '" + date.ToString("yyyy-MM-dd H:mm") + "', '" +
                         countBuy + "', '" + SumPrice + "', '" + sumNDS + "', '" + idRequest + "')";
                     ExecuteQuery(txtSQLQuery);
                     txtSQLQuery = "update JournalEntries set IdJournalOfOperations = '" + MaxValue + "' where IdJournalOfOperations = '-1'";
@@ -402,11 +426,14 @@ ToolStripComboBox comboBox, string displayMember, string valueMember)
             catch (Exception) { }
         }
 
-        private void buttonJE_Click(object sender, EventArgs e)
+        private void toolStripTextBoxCount_TextChanged(object sender, EventArgs e)
         {
-            var form = new FormJournalEntries();
-            form.IdJO = idJO;
-            form.Show();
+            double MPrice = Convert.ToDouble(toolStripTextBoxMPrice.Text);
+            if (toolStripTextBoxCount.Text != "")
+            {
+                double SumBuy = MPrice * Convert.ToInt32(toolStripTextBoxCount.Text);
+                toolStripTextBoxSumBuy.Text = SumBuy.ToString();
+            }
         }
     }
 }

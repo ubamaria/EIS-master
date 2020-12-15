@@ -28,7 +28,7 @@ namespace EIS
         {
             string ConnectionString = @"Data Source=" + sPath +
 ";New=False;Version=3";
-            String selectCommand = "Select Request.IdRequest,Buyer.FIO, Request.Count, Request.RequestDate FROM Request Join Buyer On Buyer.IdBuyer=Request.IdBuyer";
+            String selectCommand = "Select Request.IdRequest, Buyer.FIO, Request.Count, Request.RequestDate FROM Request Join Buyer On Buyer.IdBuyer=Request.IdBuyer";
             selectTable(ConnectionString, selectCommand);
         }
         public void selectTable(string ConnectionString, String selectCommand)
@@ -114,9 +114,20 @@ namespace EIS
             {
                 int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
                 string valueId = dataGridView1[0, CurrentRow].Value.ToString();
-                String selectCommand = "delete from Request where IdRequest =" + valueId;
                 string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
+
+                String selectCommand = "delete from JournalEntries where IdJournalOfOperations = " +
+                    "(select IdJournalOfOperations from JournalOfOperations where IdRequest = '" + valueId + "')";
                 changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from JournalOfOperations where IdRequest = '" + valueId + "'";
+                changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from TablePartOperation where IdRequest = '" + valueId + "'";
+                changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from RequestMaterial where IdRequest = '" + valueId + "'";
+                changeValue(ConnectionString, selectCommand);
+                selectCommand = "delete from Request where IdRequest = '" + valueId + "'";
+                changeValue(ConnectionString, selectCommand);
+
                 selectCommand = "Select Request.IdRequest,Buyer.FIO, Request.Count, Request.RequestDate FROM Request Join Buyer On Buyer.IdBuyer=Request.IdBuyer";
                 refreshForm(ConnectionString, selectCommand);
             }
@@ -128,7 +139,8 @@ namespace EIS
             {
                 var form = new FormRequestMaterial();
                 int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
-                form.IdRequest = CurrentRow;
+                int valueId = Convert.ToInt32(dataGridView1[0, CurrentRow].Value);
+                form.IdRequest = valueId;
                 form.FormClosed += new FormClosedEventHandler(formRMclosed);
                 form.Show();
             }

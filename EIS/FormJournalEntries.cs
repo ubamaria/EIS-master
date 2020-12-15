@@ -56,8 +56,8 @@ namespace EIS
                 "Join ChartOfAccounts S On S.idChartOfAccounts = Kt";
             if (!checkBoxAll.Checked)
             {
-                selectCommand += " Where Date >= '" + dateTimePickerFrom.Value.ToString("yyyy-MM-dd") + 
-                    "' and Date <= '" + dateTimePickerTo.Value.ToString("yyyy-MM-dd") + "'";
+                selectCommand += " Where Date >= '" + dateTimePickerFrom.Value.ToString("yyyy-MM-dd H:mm") + 
+                    "' and Date <= '" + dateTimePickerTo.Value.ToString("yyyy-MM-dd H:mm") + "'";
             }
             if (idJO != -1)
             {
@@ -94,6 +94,10 @@ namespace EIS
         private void FormJournalEntries_Load(object sender, EventArgs e)
         {
             updateGrid();
+            if (idJO != -1)
+            {
+                label3.Text = "По операции " + idJO;
+            }
         }
     }
 }

@@ -41,8 +41,8 @@ namespace EIS
             if (comboBoxReport.SelectedIndex != -1)
             {
                 string ConnectionString = @"Data Source=" + sPath + ";New=False;Version=3";
-                string dateFrom = dateTimePickerFrom.Value.ToString("yyyy-MM-dd");
-                string dateTo = dateTimePickerTo.Value.ToString("yyyy-MM-dd");
+                string dateFrom = dateTimePickerFrom.Value.ToString("yyyy-MM-dd H:mm");
+                string dateTo = dateTimePickerTo.Value.ToString("yyyy-MM-dd H:mm");
                 labelSum.Text = "Итого: ";
                 itogo = "";
 
